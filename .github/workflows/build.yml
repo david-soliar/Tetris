@@ -21,12 +21,18 @@ jobs:
           distribution: temurin
           java-version: 25
 
-      - name: build jar
-        run: mvn -Djavafx.platform=win clean package
+      - name: Build project
+        run: mvn clean package
 
-      - name: jlink
+      - name: Resolve JavaFX modules
+        run: |
+          mkdir fx
+          mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=fx
+
+      - name: Create runtime image (jlink)
         run: |
           jlink ^
+            --module-path "%JAVA_HOME%\jmods;fx" ^
             --add-modules java.base,javafx.controls,javafx.fxml ^
             --output runtime ^
             --strip-debug ^
@@ -34,7 +40,7 @@ jobs:
             --no-header-files ^
             --no-man-pages
 
-      - name: jpackage
+      - name: Create installer (jpackage)
         run: |
           jpackage ^
             --name Tetris ^
