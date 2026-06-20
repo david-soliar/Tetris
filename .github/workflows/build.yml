@@ -22,7 +22,7 @@ jobs:
           java-version: 25
 
       - name: build jar
-        run: mvn clean package -Djavafx.platform=win
+        run: mvn -Djavafx.platform=win clean package
 
       - name: jlink
         run: |
