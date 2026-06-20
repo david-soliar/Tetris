@@ -28,7 +28,6 @@ public class App extends Application {
     private PlayView playView;
     private AnimationTimer timer;
     private ChangeListener<Boolean> gameOverListener;
-    private String cssUrl;
 
     @Override
     public void start(Stage stage) {
@@ -43,9 +42,6 @@ public class App extends Application {
         if (iconUrl != null) {
             stage.getIcons().add(new Image(iconUrl.toExternalForm()));
         }
-        
-        var css = getClass().getResource("/css/style.css");
-        cssUrl = (css != null) ? css.toExternalForm() : null;
 
         gameSetup();
 
@@ -74,9 +70,6 @@ public class App extends Application {
         ));
 
         scene = new Scene(root);
-        if (cssUrl != null) {
-            scene.getStylesheets().add(cssUrl);
-        }
         stage.setScene(scene);
         
         inputHandler.attach(scene, controller, () -> playView.render());

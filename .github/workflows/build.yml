@@ -1,0 +1,51 @@
+name: Build Tetris
+
+
+on:
+  push:
+    paths-ignore: ["**.md", "LICENSE"]
+  pull_request:
+    paths-ignore: ["**.md", "LICENSE"]
+
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: build jar
+        run: mvn clean package -Djavafx.platform=win
+
+      - name: jlink
+        run: |
+          jlink ^
+            --add-modules java.base,javafx.controls,javafx.fxml ^
+            --output runtime ^
+            --strip-debug ^
+            --compress 2 ^
+            --no-header-files ^
+            --no-man-pages
+
+      - name: jpackage
+        run: |
+          jpackage ^
+            --name Tetris ^
+            --input target ^
+            --main-jar Tetris-1.0.0.jar ^
+            --main-class davidsoliar.tetris.App ^
+            --runtime-image runtime ^
+            --type exe ^
+            --dest dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tetris-windows
+          path: dist
