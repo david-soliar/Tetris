@@ -8,34 +8,53 @@ on:
     paths-ignore: ["**.md", "LICENSE"]
 
 
+
 jobs:
   build-windows:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 25
+          java-version: 21
 
-      - name: Build JAR
+      - name: build jar
         run: mvn clean package
 
-      - name: Create EXE
+      - name: copy runtime and dependencies
+        run: mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=deps
+
+      - name: jlink
+        shell: cmd
+        run: |
+          jlink ^
+            --module-path "%JAVA_HOME%\jmods;deps" ^
+            --add-modules javafx.controls,javafx.fxml ^
+            --output runtime ^
+            --strip-debug ^
+            --compress=2 ^
+            --no-header-files ^
+            --no-man-pages
+
+      - name: jpackage
         shell: cmd
         run: |
           jpackage ^
             --name Tetris ^
             --input target ^
-            --main-jar Tetris-1.0.0.jar ^
+            --main-jar Tetris.jar ^
             --main-class davidsoliar.tetris.App ^
-            --type exe ^
+            --runtime-image runtime ^
+            --icon src/main/resources/images/icon.ico ^
+            --type app-image ^
             --dest dist
 
-      - name: Upload
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Tetris-Windows

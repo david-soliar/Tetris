@@ -87,7 +87,7 @@ public class App extends Application {
                 }
             }
         };
-        gameOverListener = (_, _, newVal) -> {
+        gameOverListener = (a, b, newVal) -> {
             if (newVal) {
                 inputHandler.detach(scene);
                 playView.render();

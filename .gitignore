@@ -24,5 +24,20 @@ hs_err_pid*
 replay_pid*
 
 
-.idea/*
-target/*
+.idea/
+
+# Build output
+target/
+deps/
+runtime/
+dist/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# OS files
+.DS_Store
+Thumbs.db

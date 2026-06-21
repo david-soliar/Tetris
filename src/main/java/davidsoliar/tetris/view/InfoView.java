@@ -44,11 +44,11 @@ public class InfoView {
         );
         infoPanel.setStyle("-fx-font-family: 'Press Start 2P'");
 
-        state.scoreProperty().addListener((_, _, newVal) -> scoreValueLabel.setText(newVal + ""));
-        state.levelProperty().addListener((_, _, newVal) -> levelValueLabel.setText(newVal + ""));
-        state.linesCompletedProperty().addListener((_, _, newVal) -> linesCompletedValueLabel.setText(newVal + ""));
-        state.nextShapeProperty().addListener((_, _, _) -> updateNextCanvas());
-        state.gameOverProperty().addListener((_, _, newVal) -> {
+        state.scoreProperty().addListener((a, b, newVal) -> scoreValueLabel.setText(newVal + ""));
+        state.levelProperty().addListener((a, b, newVal) -> levelValueLabel.setText(newVal + ""));
+        state.linesCompletedProperty().addListener((a, b, newVal) -> linesCompletedValueLabel.setText(newVal + ""));
+        state.nextShapeProperty().addListener((a, b, c) -> updateNextCanvas());
+        state.gameOverProperty().addListener((a, b, newVal) -> {
             if (newVal) gameOverButton.setVisible(true);
         });
     }
@@ -155,9 +155,9 @@ public class InfoView {
         gameOverButton.setMaxHeight(Constants.TILE_SIZE * (Constants.SHAPE_N - 1));
         gameOverButton.setPadding(new Insets(25));
 
-        gameOverButton.setOnMouseEntered(_ -> gameOverButton.setBackground(Constants.HOVER_BACKGROUND));
-        gameOverButton.setOnMouseExited(_ -> gameOverButton.setBackground(Constants.NORMAL_BACKGROUND));
-        gameOverButton.setOnAction(_ -> controller.restartGame());
+        gameOverButton.setOnMouseEntered(a -> gameOverButton.setBackground(Constants.HOVER_BACKGROUND));
+        gameOverButton.setOnMouseExited(a -> gameOverButton.setBackground(Constants.NORMAL_BACKGROUND));
+        gameOverButton.setOnAction(a -> controller.restartGame());
 
         gameOverButton.setVisible(false);
         return gameOverButton;

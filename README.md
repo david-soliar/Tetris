@@ -26,7 +26,13 @@ mvn javafx:run
 ```
 
 ### Build
+remove deps & runtine & dist folders if they exist and then run
 ```bash
 mvn clean package
-```
 
+mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=deps
+
+jlink --module-path "%JAVA_HOME%\jmods;deps" --add-modules javafx.controls,javafx.fxml --output runtime --strip-debug --compress=2 --no-header-files --no-man-pages
+
+jpackage --name Tetris --input target --main-jar Tetris-1.0.0.jar --main-class davidsoliar.tetris.App --runtime-image runtime --type app-image --dest dist
+```
