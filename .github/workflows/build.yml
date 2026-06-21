@@ -50,14 +50,17 @@ jobs:
           VERSION="$BASE.$GITHUB_RUN_NUMBER"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: build
+      - name: build jar
         run: mvn clean package
+
+      - name: copy runtime and dependencies
+        run: mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=deps
 
       - name: jlink and jpackage
         shell: bash
         run: |
           jlink \
-            --module-path "$JAVA_HOME/jmods" \
+            --module-path "%JAVA_HOME%\jmods;deps" \
             --add-modules javafx.controls \
             --output runtime \
             --strip-debug \
