@@ -82,7 +82,7 @@ jobs:
         shell: bash
         run: |
           cd dist
-          zip -r ../${{ matrix.name }}-${{ steps.ver.outputs.version }}.zip Tetris
+          zip -r ../${{ matrix.name }}-${{ steps.ver.outputs.version }}.zip .
 
       - uses: actions/upload-artifact@v4
         with:
