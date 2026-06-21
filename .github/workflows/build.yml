@@ -59,8 +59,11 @@ jobs:
       - name: jlink and jpackage
         shell: bash
         run: |
+          SEP=":"
+          [[ "$RUNNER_OS" == "Windows" ]] && SEP=";"
+
           jlink \
-            --module-path "%JAVA_HOME%\jmods:deps" \
+            --module-path "$JAVA_HOME/jmods${SEP}deps" \
             --add-modules javafx.controls \
             --output runtime \
             --strip-debug \
