@@ -9,30 +9,42 @@ Includes score and level system, where higher levels increase game speed.
   <img src="example2.png" width="45%" />
 </p>
 
-Controls (arrow keys):
-- ← → : Move piece
-- ↓ : Soft drop
-- ↑ : Rotate piece
+### Controls (arrow keys):
+← → move, ↓ drop, ↑ rotate
+
+
+## Download
+
+Prebuilt app is available in the GitHub Releases page:
+
+https://github.com/david-soliar/Tetris/releases
 
 
 ## Building and Running
 Requirements:
-- Java 25
+- Java 21
 - Maven
 
-### Run
-```bash
+### Run (dev)
+```
 mvn javafx:run
 ```
 
-### Build
-remove deps & runtine & dist folders if they exist and then run
+### Build native app
 ```bash
 mvn clean package
 
 mvn dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=deps
 
-jlink --module-path "%JAVA_HOME%\jmods;deps" --add-modules javafx.controls,javafx.fxml --output runtime --strip-debug --compress=2 --no-header-files --no-man-pages
+jlink --module-path "$JAVA_HOME/jmods:deps" \
+      --add-modules javafx.controls \
+      --output runtime
 
-jpackage --name Tetris --input target --main-jar Tetris-1.0.0.jar --main-class davidsoliar.tetris.App --runtime-image runtime --type app-image --dest dist
+jpackage --name Tetris \
+         --input target \
+         --main-jar Tetris.jar \
+         --main-class davidsoliar.tetris.App \
+         --runtime-image runtime \
+         --type app-image \
+         --dest dist
 ```
