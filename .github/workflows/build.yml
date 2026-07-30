@@ -18,11 +18,13 @@ jobs:
             icon: src/main/resources/images/icon.ico
             name: Tetris-Windows-x64
 
-          - os: windows-11-arm
-            platform: win
-            icon: src/main/resources/images/icon.ico
-            name: Tetris-Windows-arm64
-
+          #
+          #- os: windows-11-arm
+          #  platform: win
+          #  icon: src/main/resources/images/icon.ico
+          #  name: Tetris-Windows-arm64
+          #
+          
           - os: ubuntu-latest
             platform: linux
             icon: src/main/resources/images/icon.png
