@@ -15,11 +15,19 @@ jobs:
         include:
           - os: windows-latest
             icon: src/main/resources/images/icon.ico
-            name: Tetris-Windows
+            name: Tetris-Windows-x64
+
+          - os: windows-11-arm
+            icon: src/main/resources/images/icon.ico
+            name: Tetris-Windows-arm64
 
           - os: ubuntu-latest
             icon: src/main/resources/images/icon.png
-            name: Tetris-Linux
+            name: Tetris-Linux-x64
+
+          - os: ubuntu-24.04-arm
+            icon: src/main/resources/images/icon.png
+            name: Tetris-Linux-arm64
 
           - os: macos-latest
             icon: src/main/resources/images/icon.icns
