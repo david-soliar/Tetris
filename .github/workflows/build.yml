@@ -54,7 +54,7 @@ jobs:
         id: ver
         shell: bash
         run: |
-          BASE=$(mvn -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+          BASE=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           VERSION="$BASE.$GITHUB_RUN_NUMBER"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
